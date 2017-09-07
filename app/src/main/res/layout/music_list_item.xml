@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    -<RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:descendantFocusability="blocksDescendants"
+        android:id="@+id/RelativeLayout1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/music_duration"
+        android:textColor="#000000"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="time"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/music_title"
+        android:textColor="#000000"
+        android:text="name"
+        android:textSize="18sp"
+        android:focusable="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignBaseline="@+id/music_duration"
+        android:layout_alignBottom="@+id/music_duration"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/music_Artist"
+        android:textColor="#000000"
+        android:text="singer"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_below="@+id/music_duration"
+        android:layout_alignStart="@+id/music_title"/>
+
+</RelativeLayout>
+
+    <!--<TextView-->
+        <!--android:id="@+id/Num"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="0"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginStart="13dp"/>-->
+</RelativeLayout>

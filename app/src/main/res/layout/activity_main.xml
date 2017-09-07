@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        >
+
+        <!--layout_weight这个属性为权重，让两个textview平分这个linearLayout-->
+        <TextView
+            android:id="@+id/musicLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="播放界面"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:background="@drawable/selector"/>
+
+        <TextView
+            android:id="@+id/listlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="歌曲列表"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:background="@drawable/selector"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/linearLayout"
+        android:id="@+id/scrollbar"
+        android:scaleType="matrix"
+        android:src="@drawable/srcoll"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scrollbar">
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>

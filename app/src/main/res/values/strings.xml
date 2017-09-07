@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MyMediaPlayer</string>
+    <string name="welcome">欢迎使用本播放器</string>
+    <string name="playing">playing</string>
+    <string name="pause">Pause</string>
+    <string name="stop">Stop</string>
+    <string name="playingTime">playingTime</string>
+    <string name="totalTime">totalTime</string>
+</resources>
