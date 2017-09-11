@@ -8,5 +8,14 @@
     tools:context="com.example.mymediaplayer.MainActivity">
 
 
+    <TextView
+        android:id="@+id/lrcView"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:text="                                               暂无歌词"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
@@ -26,12 +27,14 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
     private int currIndex;
 
     private EditText onLineSong;   //播放在线歌曲
-    private String songURL;            //在线歌曲的URL
+    private String songURL="";            //在线歌曲的URL
+    private DownUtil mSongDownUtil;    //下载
+    private Button downLoadButton;
+
+    private TextView lrcView;//歌词文件显示控件
+    private LrcParser lp=new LrcParser();//处理歌词文件实例
+    private LrcInfo lrcInfo=new LrcInfo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager=(ViewPager) findViewById(R.id.viewPager);
         LayoutInflater inflater=getLayoutInflater();
         View view1=inflater.inflate(R.layout.music_layout,null);
-        View view2=inflater.inflate(R.layout.list_layout,null);
+        View view2=inflater.inflate(R.layout.lrc_layout,null);
         musicLayout=(TextView) findViewById(R.id.musicLayout);
         ListLayout=(TextView)findViewById(R.id.listlayout);
         scrollbar=(ImageView)findViewById(R.id.scrollbar);
@@ -162,13 +171,34 @@ public class MainActivity extends AppCompatActivity {
         playingTime = (TextView) findViewById(R.id.playingTime);
         stateText = (TextView) findViewById(R.id.stateText);
 
-
         mListView = (ListView) findViewById(R.id.listView);
         FindSongs finder = new FindSongs();
         mp3Infos = finder.getMp3Infos(MainActivity.this.getContentResolver());
         finder.setListAdpter(getApplicationContext(),mp3Infos,mListView);
 
         onLineSong=(EditText)findViewById(R.id.onlineedit);
+        downLoadButton=(Button) findViewById(R.id.downloadbutton);
+
+
+
+        String path= Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/0test.lrc" ;//歌词文件地址
+        lrcView=(TextView)findViewById(R.id.lrcView);
+
+        try{
+            Log.i("___lyric____","--begin--");
+            lrcInfo=lp.parser(path);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        String allLrc="";
+        if(lrcInfo.getInfos()!=null) {
+            for (String tmp : lrcInfo.getInfos().values()) {
+                allLrc = allLrc + tmp;
+            }
+            lrcView.setText(allLrc);
+        }
     }
 
 
@@ -267,6 +297,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+
+            downLoadButton.setOnClickListener(new myOnClickListener());
+
+
+            //int curTime=mediaPlayer.getCurrentPosition();
+
+            //将所有歌词填充出来
+//            Map<Long,String> lrc= lrcInfo.getInfos();
+//            String allLrc="";
+//            for(String tmp:lrc.values()){
+//                allLrc=allLrc+tmp;
+//            }
+//            lrcView.setText(allLrc);
+
+//            //循环变量类型  循环变量名称 ：被遍历对象
+//            for(long key:lrc.keySet()){
+//                if(key==curTime){
+//                    lrcView.setText(lrc.get(key));
+//                }
+//            }
+
+            mediaPlayer.setNextMediaPlayer(mediaPlayer);
+
             setSongName();
             handler.postDelayed(runnable, 100);
         }
@@ -300,6 +353,13 @@ public class MainActivity extends AppCompatActivity {
                     viewPager.setCurrentItem(1);
                     break;
 
+                case R.id.downloadbutton:
+                    if(!songURL.isEmpty()){
+                        downloadSong();
+                    }else{
+                        Toast.makeText(MainActivity.this,"please inset song's URL first!",Toast.LENGTH_SHORT-1).show();
+                    }
+                    break;
                 default:
                     break;
 
@@ -336,6 +396,25 @@ public class MainActivity extends AppCompatActivity {
                 listPosition=position;
             }
         }
+    }
+
+    //下载歌曲文件
+    private void downloadSong() {
+        // 初始化DownUtil对象（最后一个参数指定线程数）
+        mSongDownUtil = new DownUtil(songURL,
+                "/mnt/sdcard/test.mp3", 1);
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    // 开始下载
+                    mSongDownUtil.download();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     //设置歌曲名称和歌手名称

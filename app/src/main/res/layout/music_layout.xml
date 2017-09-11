@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/songAlbum"
-        android:layout_width="17dp"
-        android:layout_height="17dp"
+        android:layout_width="5dp"
+        android:layout_height="5dp"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -160,11 +160,41 @@
         app:layout_constraintVertical_bias="0.892"
         android:layout_marginStart="49dp"/>
 
+    <EditText
+        android:id="@+id/onlineedit"
+        android:layout_width="314dp"
+        android:layout_height="30dp"
+        android:textSize="6sp"
+        android:hint="please inset song's URL here"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteY="481dp"/>
+
+    <Button
+        android:id="@+id/downloadbutton"
+        android:text="@string/download"
+        android:textSize="6sp"
+        android:layout_width="65dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteY="481dp"
+        tools:layout_editor_absoluteX="319dp"/>
+
     <ListView
         android:id="@+id/listView"
-        android:layout_width="384dp"
+        android:layout_width="0dp"
         android:layout_height="176dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -172,16 +202,5 @@
 
     </ListView>
 
-    <EditText
-        android:id="@+id/onlineedit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="4sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="1.0"/>
 
 </android.support.constraint.ConstraintLayout>

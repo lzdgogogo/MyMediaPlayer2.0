@@ -32,6 +32,7 @@ public class MusicService extends Service {
 
     public MusicService() {
         initMediaPlayer();
+
     }
 
 

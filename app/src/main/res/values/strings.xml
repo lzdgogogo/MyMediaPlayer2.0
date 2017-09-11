@@ -6,4 +6,5 @@
     <string name="stop">Stop</string>
     <string name="playingTime">playingTime</string>
     <string name="totalTime">totalTime</string>
+    <string name="download">download</string>
 </resources>
