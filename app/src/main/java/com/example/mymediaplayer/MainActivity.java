@@ -318,7 +318,6 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //            }
 
-            mediaPlayer.setNextMediaPlayer(mediaPlayer);
 
             setSongName();
             handler.postDelayed(runnable, 100);
@@ -401,8 +400,7 @@ public class MainActivity extends AppCompatActivity {
     //下载歌曲文件
     private void downloadSong() {
         // 初始化DownUtil对象（最后一个参数指定线程数）
-        mSongDownUtil = new DownUtil(songURL,
-                "/mnt/sdcard/test.mp3", 1);
+        mSongDownUtil = new DownUtil(songURL,Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/大城小爱.mp3", 1);
 
         new Thread() {
             @Override
