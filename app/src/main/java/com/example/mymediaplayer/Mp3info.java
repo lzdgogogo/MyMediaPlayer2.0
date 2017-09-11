@@ -12,7 +12,7 @@ public class Mp3info {
     private String artist;//艺术家
     private long duration;
     private long size;
-    private String url;
+    private String url;   //路径
     private String album;
     private int isMusic;
 

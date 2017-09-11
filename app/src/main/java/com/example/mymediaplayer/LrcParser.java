@@ -4,9 +4,7 @@ package com.example.mymediaplayer;
 //解析歌词类
 
 import android.util.Log;
-import android.widget.Toast;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,9 +17,6 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static android.R.attr.path;
-import static java.lang.System.in;
-
 public class LrcParser {
     private LrcInfo lrcinfo = new LrcInfo();
     //存放临时时间
@@ -33,10 +28,10 @@ public class LrcParser {
     private Map<Long, String> maps = new TreeMap<Long, String>();
 
 
-    /**
-     * @param inputStream 输入流
-     * @return
-     */
+
+      //@param inputStream 输入流
+
+
     public LrcInfo parser(String path) throws IOException {
         File f = new File(path);
 

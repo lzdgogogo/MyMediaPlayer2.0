@@ -20,7 +20,7 @@ public class MusicService extends Service {
     public final IBinder binder = new MyBinder();
 
     //关联Service和Activity
-    public class MyBinder extends Binder {
+    class MyBinder extends Binder {
         MusicService getService() {
             return MusicService.this;
         }
@@ -30,12 +30,27 @@ public class MusicService extends Service {
     public static MediaPlayer mediaPlayer = new MediaPlayer();
     public static ObjectAnimator animator;
 
-    public MusicService() {
-        initMediaPlayer();
-
+    public MusicService(Mp3info mp3info) {
+        initMediaPlayer(mp3info);
     }
 
+    public MusicService() {
+        initMediaPlayer();
+    }
 
+    //初始化MediaPlayer:读取一个mp3文件并且设置为循环播放
+    public void initMediaPlayer(Mp3info mp3info) {
+        try {
+            String path=mp3info.getUrl();
+
+            mediaPlayer.setDataSource(path);
+            mediaPlayer.prepare();                      //设置播放器进入prepare状态
+            mediaPlayer.setLooping(true);               // 设置循环播放
+        } catch (Exception e) {
+            Log.d("hint","can't get to the song");
+            e.printStackTrace();
+        }
+    }
 
     //初始化MediaPlayer:读取一个mp3文件并且设置为循环播放
     public void initMediaPlayer() {

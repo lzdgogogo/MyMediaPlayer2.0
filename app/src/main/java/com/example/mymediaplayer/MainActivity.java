@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton nextSong;
     private ImageButton preSong;
 
+    private ImageView songAlbum;
+
     private TextView songName;
     private TextView singer;
     // private ObjectAnimator animator;
@@ -89,8 +91,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bindServiceConnection();
-        musicService = new MusicService();
+
 
         viewPager=(ViewPager) findViewById(R.id.viewPager);
         LayoutInflater inflater=getLayoutInflater();
@@ -142,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
         scrollbar.setImageMatrix(matrix);                                           //将滚动条的初始位置设置成与左边界间隔一个offset
 
 
-        ImageView songAlbum = (ImageView) findViewById(R.id.songAlbum);
-        MusicService.animator = ObjectAnimator.ofFloat(songAlbum, "rotation", 0, 359);
+        //ImageView songAlbum = (ImageView) findViewById(songAlbum);
+
 
         songName=(TextView)findViewById(R.id.songName);
         singer=(TextView)findViewById(R.id.singer);
@@ -162,10 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
         preSong=(ImageButton)findViewById(R.id.preSongButton);
         preSong.setOnClickListener(new myOnClickListener());
-
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
-        seekBar.setProgress(mediaPlayer.getCurrentPosition());
-        seekBar.setMax(mediaPlayer.getDuration());
 
         totalTime = (TextView) findViewById(R.id.totalTime);
         playingTime = (TextView) findViewById(R.id.playingTime);
@@ -199,6 +196,19 @@ public class MainActivity extends AppCompatActivity {
             }
             lrcView.setText(allLrc);
         }
+
+
+        Mp3info mp3info=mp3Infos.get(listPosition);
+        bindServiceConnection();
+        musicService = new MusicService(mp3info);
+        MusicService.animator = ObjectAnimator.ofFloat(songAlbum, "rotation", 0, 359);
+        seekBar = (SeekBar) findViewById(R.id.seekBar);
+        seekBar.setProgress(mediaPlayer.getCurrentPosition());
+        seekBar.setMax(mediaPlayer.getDuration());
+
+        songAlbum=(ImageView)findViewById(R.id.songAlbum);
+
+        //songAlbum.setImageBitmap(mp3info.getAlbum());
     }
 
 
@@ -233,12 +243,6 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
 
             //设置监听器
-
-            isPlay.setOnClickListener(new myOnClickListener());
-//            stop.setOnClickListener(new myOnClickListener());
-//            quit.setOnClickListener(new myOnClickListener());
-            nextSong.setOnClickListener(new myOnClickListener());
-            preSong.setOnClickListener(new myOnClickListener());
 
             mListView.setOnItemClickListener(new MusicListItemClickListener());                     //播放列表的监听器
 
@@ -296,6 +300,8 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             });
+
+            //songAlbum
 
 
             downLoadButton.setOnClickListener(new myOnClickListener());
