@@ -46,8 +46,6 @@ import static com.example.mymediaplayer.MusicService.which;
 public class MainActivity extends AppCompatActivity {
 
     private ImageButton isPlay;
-//    private ImageButton stop;
-//    private ImageButton quit;
     private ImageButton nextSong;
     private ImageButton preSong;
 
@@ -83,14 +81,14 @@ public class MainActivity extends AppCompatActivity {
     private Button downLoadButton;
 
     private TextView lrcView;//歌词文件显示控件
-    private LrcParser lp=new LrcParser();//处理歌词文件实例
-    private LrcInfo lrcInfo=new LrcInfo();
+    private LrcUtils lrcUtils;//处理歌词文件实例
+    private List<Lyric> lrcInfos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        verifyStoragePermissions(this);
 
 
         viewPager=(ViewPager) findViewById(R.id.viewPager);
@@ -152,12 +150,6 @@ public class MainActivity extends AppCompatActivity {
         isPlay=(ImageButton) findViewById(R.id.playButton);
         isPlay.setOnClickListener(new myOnClickListener());
 
-//        stop = (ImageButton) findViewById(R.id.pauseButton);
-//        stop.setOnClickListener(new myOnClickListener());
-//
-//        quit = (ImageButton) findViewById(R.id.stopButton);
-//        quit.setOnClickListener(new myOnClickListener());
-
         nextSong=(ImageButton) findViewById(R.id.nextSongButton);
         nextSong.setOnClickListener(new myOnClickListener());
 
@@ -176,31 +168,11 @@ public class MainActivity extends AppCompatActivity {
         onLineSong=(EditText)findViewById(R.id.onlineedit);
         downLoadButton=(Button) findViewById(R.id.downloadbutton);
 
-
-
-        String path= Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/0test.lrc" ;//歌词文件地址
-        lrcView=(TextView)findViewById(R.id.lrcView);
-
-        try{
-            Log.i("___lyric____","--begin--");
-            lrcInfo=lp.parser(path);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
-        String allLrc="";
-        if(lrcInfo.getInfos()!=null) {
-            for (String tmp : lrcInfo.getInfos().values()) {
-                allLrc = allLrc + tmp;
-            }
-            lrcView.setText(allLrc);
-        }
-
-
         Mp3info mp3info=mp3Infos.get(listPosition);
+
         bindServiceConnection();
         musicService = new MusicService(mp3info);
+
         MusicService.animator = ObjectAnimator.ofFloat(songAlbum, "rotation", 0, 359);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
         seekBar.setProgress(mediaPlayer.getCurrentPosition());
@@ -208,7 +180,30 @@ public class MainActivity extends AppCompatActivity {
 
         songAlbum=(ImageView)findViewById(R.id.songAlbum);
 
-        //songAlbum.setImageBitmap(mp3info.getAlbum());
+//        String path= Environment.getExternalStorageDirectory().getAbsolutePath().toString()+"/0test.lrc" ;//歌词文件地址
+        lrcView=(TextView)findViewById(R.id.lrcView);
+//        File f = new File(path);
+//
+//        lrcInfos=lrcUtils.readLRC(f);
+//        lrcView.setText();
+
+//        try{
+//            Log.i("___lyric____","--begin--");
+//            lrcInfo=lp.parser(path);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//
+//        String allLrc="";
+//        if(lrcInfo.getInfos()!=null) {
+//            for (String tmp : lrcInfo.getInfos().values()) {
+//                allLrc = allLrc + tmp;
+//            }
+//            lrcView.setText(allLrc);
+//        }
+
+        //songAlbum.setImageBitmap(mp3info.getAlbum());//处理专辑图
     }
 
 
@@ -575,6 +570,7 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
     }
+
     @Override
     public void onDestroy() {
         unbindService(sc);

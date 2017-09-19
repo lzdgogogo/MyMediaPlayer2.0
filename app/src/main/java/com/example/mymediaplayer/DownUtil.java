@@ -117,7 +117,7 @@ public class DownUtil {
                                 + "application/vnd.ms-powerpoint, application/msword, */*");
                 conn.setRequestProperty("Accept-Language", "zh-CN");
                 conn.setRequestProperty("Charset", "UTF-8");
-                InputStream inStream = conn.getInputStream();
+                InputStream inStream = conn.getInputStream();                   //获取输入流
 
                 /*
                  * 跳过startPos个字节，表明该线程只下载自己负责哪部分文件
@@ -137,8 +137,7 @@ public class DownUtil {
                 byte[] buffer = new byte[1024];
                 int hasRead = 0;
                 // 读取网络数据，并写入本地文件
-                while (length < currentPartSize
-                        && (hasRead = inStream.read(buffer)) > 0)
+                while (length < currentPartSize && (hasRead = inStream.read(buffer)) > 0)
                 {
                     currentPart.write(buffer, 0, hasRead);
                     // 累计该线程下载的总大小
